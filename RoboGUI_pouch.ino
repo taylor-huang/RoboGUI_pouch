@@ -76,7 +76,7 @@ void setup() {
   matrix.clear();
   matrix.writeDisplay();
   
-  state = BOOTING;
+  state = EMERGENCY;
 }
 
 void loop() {
@@ -167,12 +167,18 @@ void loop() {
     case TURNING_LEFT:
       turningLeftFlag = true;
       while(turningLeftFlag){
-        matrix.clear();
-        matrix.drawBitmap(0, 0, turn_left, 8, 8, LED_YELLOW);
-        matrix.writeDisplay();
+        for(int i = 0; i < 5; i++){
+          tcaselect(i);
+          matrix.clear();
+          matrix.drawBitmap(0, 0, turn_left, 8, 8, LED_YELLOW);
+          matrix.writeDisplay();
+        }
         delay(300);
-        matrix.clear();
-        matrix.writeDisplay();
+        for(int i = 0; i < 5; i++){
+          tcaselect(i);
+          matrix.clear();
+          matrix.writeDisplay();
+        }
         delay(300);
         turningLeftFlag = false;
       }
@@ -181,11 +187,18 @@ void loop() {
     case TURNING_RIGHT:
       turningRightFlag = true;
       while(turningRightFlag){
-        matrix.clear();
-        matrix.writeDisplay();
+        for(int i = 0; i < 5; i++){
+          tcaselect(i);
+          matrix.clear();
+          matrix.drawBitmap(0, 0, turn_right, 8, 8, LED_YELLOW);
+          matrix.writeDisplay();
+        }
         delay(300);
-        matrix.drawBitmap(0, 0, turn_right, 8, 8, LED_YELLOW);
-        matrix.writeDisplay();
+        for(int i = 0; i < 5; i++){
+          tcaselect(i);
+          matrix.clear();
+          matrix.writeDisplay();
+        }
         delay(300);
         turningRightFlag = false;
       }
@@ -239,11 +252,17 @@ void loop() {
     case EMERGENCY:
       emergencyFlag = true;
       while(emergencyFlag){
-        matrix.clear();
-        matrix.writeDisplay();
+        for(int i = 0; i < 5; i++){
+          tcaselect(i);
+          matrix.clear();
+          matrix.writeDisplay();
+        }
         delay(200);
-        matrix.drawBitmap(0, 0, emergency_alert, 8, 8, LED_RED);
-        matrix.writeDisplay();
+        for(int i = 0; i < 5; i++){
+          tcaselect(i);
+          matrix.drawBitmap(0, 0, emergency_alert, 8, 8, LED_RED);
+          matrix.writeDisplay();
+        }
         delay(200);
         emergencyFlag = false;
       }
