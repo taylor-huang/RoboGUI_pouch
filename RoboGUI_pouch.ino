@@ -76,7 +76,7 @@ void setup() {
   matrix.clear();
   matrix.writeDisplay();
   
-  state = EMERGENCY;
+  state = BATTERY;
 }
 
 void loop() {
@@ -89,8 +89,6 @@ void loop() {
   
   switch(state){
     case BOOTING:
-    //for(int i = 0; i < 5; i++){
-      //tcaselect(i);
       bootingFlag = true;
       while(bootingFlag){
         for(int i = 0; i < 5; i++){
@@ -158,7 +156,6 @@ void loop() {
         delay(200);
         bootingFlag = false;
       }
-    //}
     break;
     
     case IDLING:
@@ -207,42 +204,66 @@ void loop() {
     case BATTERY:
       batteryFlag = true;
       while(batteryFlag){
-        matrix.clear();
-        matrix.drawBitmap(0, 0, battery_6, 8, 8, LED_GREEN);
-        matrix.writeDisplay();
+        for(int i = 0; i < 5; i++){
+          tcaselect(i);
+          matrix.clear();
+          matrix.drawBitmap(0, 0, battery_6, 8, 8, LED_GREEN);
+          matrix.writeDisplay();
+        }
         delay(1000);
-        
-        matrix.clear();
-        matrix.drawBitmap(0, 0, battery_5, 8, 8, LED_GREEN);
-        matrix.writeDisplay();
-        delay(1000);
-        
-        matrix.clear();
-        matrix.drawBitmap(0, 0, battery_4, 8, 8, LED_GREEN);
-        matrix.writeDisplay();
-        delay(1000);
-        
-        matrix.clear();
-        matrix.drawBitmap(0, 0, battery_3, 8, 8, LED_YELLOW);
-        matrix.writeDisplay();
-        delay(1000);
-        
-        matrix.clear();
-        matrix.drawBitmap(0, 0, battery_2, 8, 8, LED_YELLOW);
-        matrix.writeDisplay();
-        delay(1000);
-        
-        matrix.clear();
-        matrix.drawBitmap(0, 0, battery_1, 8, 8, LED_RED);
-        matrix.writeDisplay();
+
+        for(int i = 0; i < 5; i++){
+          tcaselect(i);
+          matrix.clear();
+          matrix.drawBitmap(0, 0, battery_5, 8, 8, LED_GREEN);
+          matrix.writeDisplay();
+        }
         delay(1000);
         
         for(int i = 0; i < 5; i++){
+          tcaselect(i);
           matrix.clear();
+          matrix.drawBitmap(0, 0, battery_4, 8, 8, LED_GREEN);
           matrix.writeDisplay();
+        }
+        delay(1000);
+        
+        for(int i = 0; i < 5; i++){
+          tcaselect(i);
+          matrix.clear();
+          matrix.drawBitmap(0, 0, battery_3, 8, 8, LED_GREEN);
+          matrix.writeDisplay();
+        }
+        delay(1000);
+        
+        for(int i = 0; i < 5; i++){
+          tcaselect(i);
+          matrix.clear();
+          matrix.drawBitmap(0, 0, battery_2, 8, 8, LED_GREEN);
+          matrix.writeDisplay();
+        }
+        delay(1000);
+        
+        for(int i = 0; i < 5; i++){
+          tcaselect(i);
+          matrix.clear();
+          matrix.drawBitmap(0, 0, battery_1, 8, 8, LED_GREEN);
+          matrix.writeDisplay();
+        }
+        delay(1000);
+        
+        for(int i = 0; i < 5; i++){
+          for(int j = 0; j < 5; j++){
+            tcaselect(j);
+            matrix.clear();
+            matrix.writeDisplay();
+          }
           delay(200);
-          matrix.drawBitmap(0, 0, battery_0, 8, 8, LED_RED);
-          matrix.writeDisplay();
+          for(int j = 0; j < 5; j++){
+            tcaselect(j);
+            matrix.drawBitmap(0, 0, battery_0, 8, 8, LED_RED);
+            matrix.writeDisplay();
+          }
           delay(200);
         }
         batteryFlag = false;
