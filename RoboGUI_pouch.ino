@@ -10,12 +10,15 @@ extern "C" {
   #include "utility/twi.h"
 }
 
+//I2C address of mux
 #define TCAADDR 0x71
 
 Adafruit_BicolorMatrix matrix = Adafruit_BicolorMatrix();
 
+//state variable
 enum State state;
 
+//flags for controlling looping of different states; set false to exit current state
 boolean bootingFlag,
   idleFlag,
   turningLeftFlag,
@@ -23,6 +26,7 @@ boolean bootingFlag,
   batteryFlag,
   emergencyFlag;
 
+//selects which I2C mux output to address
 void tcaselect(uint8_t i) {
   if (i > 7) return;
  
@@ -39,7 +43,7 @@ void setup() {
   Wire.begin();
   
   Serial.begin(9600);
-
+  /*
   for (uint8_t t=0; t<8; t++) {
     tcaselect(t);
     Serial.print("TCA Port #"); Serial.println(t);
@@ -54,7 +58,8 @@ void setup() {
     }
   }
   Serial.println("\ndone");
-
+  */
+  //initialize each LED matrix through the mux
   tcaselect(0);
   matrix.begin(0x70);
   matrix.clear();
@@ -75,19 +80,15 @@ void setup() {
   matrix.begin(0x70);
   matrix.clear();
   matrix.writeDisplay();
-  
+
+  //state to be decide by ROS input
   state = BATTERY;
 }
 
 void loop() {
-  /*
-  if (Serial.available())  {
-    Serial.write(Serial.read());//send what has been received
-    Serial.println();   //print line feed character
-  }
-  */
-  
+  //switch case statement for main state machine functionality
   switch(state){
+    //boot state
     case BOOTING:
       bootingFlag = true;
       while(bootingFlag){
@@ -157,10 +158,12 @@ void loop() {
         bootingFlag = false;
       }
     break;
-    
+
+    //idle state
     case IDLING:
     break;
-    
+
+    //left turning state
     case TURNING_LEFT:
       turningLeftFlag = true;
       while(turningLeftFlag){
@@ -180,7 +183,8 @@ void loop() {
         turningLeftFlag = false;
       }
     break;
-    
+
+    //right turning state
     case TURNING_RIGHT:
       turningRightFlag = true;
       while(turningRightFlag){
@@ -200,7 +204,9 @@ void loop() {
         turningRightFlag = false;
       }
     break;
-    
+
+
+    //battery display state; needs development to separate different battery states
     case BATTERY:
       batteryFlag = true;
       while(batteryFlag){
@@ -269,7 +275,8 @@ void loop() {
         batteryFlag = false;
       }
     break;
-    
+
+    //emergency/collision state
     case EMERGENCY:
       emergencyFlag = true;
       while(emergencyFlag){
@@ -289,6 +296,7 @@ void loop() {
       }
     break;
 
+    //default/error state
     default:
       Serial.print("default error");
     break;
