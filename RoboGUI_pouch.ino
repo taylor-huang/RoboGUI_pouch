@@ -1,3 +1,4 @@
+#include <Adafruit_GPS.h>
 #include <Wire.h>
 #include <Adafruit_LEDBackpack.h>
 #include <Adafruit_GFX.h>
