@@ -29,6 +29,7 @@ enum State{
   BATTERY,
   EMERGENCY
 };
+enum State state;
 
 static const uint8_t PROGMEM
   boot0[] =
@@ -212,7 +213,11 @@ boolean bootingFlag,
 
 /*
 void rosBlink(const std_msgs::Empty& toggle_msg){
-  digitalWrite(D2, HIGH - digitalRead(D2));
+  if(state == BOOTING) state = BATTERY;
+  else if(state == BATTERY) state = TURNING_LEFT;
+  else if(state == TURNING_LEFT) state = TURNING_RIGHT;
+  else if(state == TURNING_RIGHT) state = EMERGENCY;
+  else state = BOOTING;
 }
 
 ros::Subscriber<std_msgs::Empty> sub("toggle_led", &rosBlink );
