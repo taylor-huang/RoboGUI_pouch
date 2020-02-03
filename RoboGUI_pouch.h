@@ -1,6 +1,8 @@
 #ifndef ROBOGUI_POUCH_H
 #define ROBOGUI_POUCH_H
 
+//#include <ros.h>
+//#include <std_msgs/Empty.h>
 #include <Wire.h>
 #include <Adafruit_GPS.h>
 #include <Adafruit_LEDBackpack.h>
@@ -11,6 +13,8 @@
 extern "C" {
   #include "utility/twi.h"
 }
+
+//ros::NodeHandle nh;
 
 #define TCAADDR 0x71
 #define D2 2
@@ -206,13 +210,19 @@ boolean bootingFlag,
   batteryFlag,
   emergencyFlag;
 
+/*
+void rosBlink(const std_msgs::Empty& toggle_msg){
+  digitalWrite(D2, HIGH - digitalRead(D2));
+}
+
+ros::Subscriber<std_msgs::Empty> sub("toggle_led", &rosBlink );
+*/
+
 void flashlightOn(){
-  pinMode(D2, OUTPUT);
   digitalWrite(D2, HIGH);
 }
 
 void flashlightOff(){
-  pinMode(D2, OUTPUT);
   digitalWrite(D2, LOW);
 }
 
